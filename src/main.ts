@@ -545,7 +545,7 @@ if (!tooltip) throw new Error('Missing #tooltip element');
 
         const nearEdge = !!seg && seg.distPx <= EDGE_HIT_PX;
         // 4-arrow cursor on vertex drag; plus-style cursor on edge add
-        map.getTargetElement().style.cursor = nearVertex ? 'move' : nearEdge ? 'copy' : 'pointer';
+        map.getTargetElement().style.cursor = nearVertex ? 'all-scroll' : nearEdge ? 'copy' : 'pointer';
       } else {
         feature.setStyle(hoverStyle);
         edgeHandleFeature.setGeometry(undefined);
