@@ -1,4 +1,5 @@
 import 'ol/ol.css';
+import './app.css';
 import Feature from 'ol/Feature';
 import OlMap from 'ol/Map';
 import View from 'ol/View';
@@ -20,17 +21,8 @@ import { singleClick } from 'ol/events/condition';
 console.log('[main.ts] module loaded');
 document.documentElement.dataset.mainTsLoaded = 'true';
 const bootBadge = document.createElement('div');
+bootBadge.className = 'app-boot-badge';
 bootBadge.textContent = 'main.ts loaded';
-bootBadge.style.position = 'fixed';
-bootBadge.style.right = '10px';
-bootBadge.style.bottom = '10px';
-bootBadge.style.zIndex = '9999';
-bootBadge.style.padding = '6px 10px';
-bootBadge.style.borderRadius = '6px';
-bootBadge.style.font = '12px/1.2 monospace';
-bootBadge.style.background = 'rgba(16, 81, 103, 0.95)';
-bootBadge.style.border = '1px solid rgba(134, 182, 198, 0.8)';
-bootBadge.style.color = '#fff';
 document.body.appendChild(bootBadge);
 
 // --- Styles ---
@@ -226,36 +218,12 @@ function primaryFeatureAtPixel(pixel: number[]) {
 
 // --- Context menu (right click) for vertex deletion ---
 const contextMenu = document.createElement('div');
-contextMenu.style.position = 'fixed';
-contextMenu.style.zIndex = '10000';
-contextMenu.style.minWidth = '180px';
-contextMenu.style.background = '#0f2430';
-contextMenu.style.border = '1px solid rgba(134, 182, 198, 0.65)';
-contextMenu.style.borderRadius = '8px';
-contextMenu.style.boxShadow = '0 10px 30px rgba(0,0,0,0.35)';
-contextMenu.style.padding = '6px';
-contextMenu.style.display = 'none';
+contextMenu.className = 'context-menu';
 
 const contextMenuItem = document.createElement('button');
 contextMenuItem.type = 'button';
+contextMenuItem.className = 'context-menu__action';
 contextMenuItem.textContent = 'Delete node/vertex';
-contextMenuItem.style.width = '100%';
-contextMenuItem.style.display = 'block';
-contextMenuItem.style.padding = '8px 10px';
-contextMenuItem.style.border = '0';
-contextMenuItem.style.borderRadius = '6px';
-contextMenuItem.style.background = 'transparent';
-contextMenuItem.style.color = '#fff';
-contextMenuItem.style.font = '12px/1.2 monospace';
-contextMenuItem.style.textAlign = 'left';
-contextMenuItem.style.cursor = 'pointer';
-
-contextMenuItem.addEventListener('mouseenter', () => {
-  contextMenuItem.style.background = 'rgba(134, 182, 198, 0.18)';
-});
-contextMenuItem.addEventListener('mouseleave', () => {
-  contextMenuItem.style.background = 'transparent';
-});
 
 contextMenu.appendChild(contextMenuItem);
 document.body.appendChild(contextMenu);
@@ -268,7 +236,7 @@ let contextTarget:
   | null = null;
 
 function hideContextMenu() {
-  contextMenu.style.display = 'none';
+  contextMenu.classList.remove('context-menu--open');
   contextTarget = null;
 }
 
@@ -343,7 +311,7 @@ map.getViewport().addEventListener('contextmenu', (e) => {
   contextTarget = { feature, vertexIndex: bestIdx };
   contextMenu.style.left = `${Math.min(clientX, rect.right - 10)}px`;
   contextMenu.style.top = `${Math.min(clientY, rect.bottom - 10)}px`;
-  contextMenu.style.display = 'block';
+  contextMenu.classList.add('context-menu--open');
 });
 
 // Click an edge to insert a vertex.
